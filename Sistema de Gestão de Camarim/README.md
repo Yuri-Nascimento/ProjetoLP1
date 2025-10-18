@@ -30,6 +30,10 @@ a. interação com usuário ✅
 
 ### 📂 **Estrutura de Diretórios**
 
+Link do repositório:
+https://github.com/Yuri-Nascimento/ProjetoLP1.git
+
+
 ```
 .
 ├── bin/         # Executáveis gerados após a compilação
