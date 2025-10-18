@@ -8,21 +8,20 @@
 ## Atividade LP1 - Desenvolver uma aplicação funcional, utilizando os principais conceitos da programação orientada a objetos (POO). A aplicação deve conter um conjunto mínimo de funcionalidades que envolvam cadastro, consulta, alteração e remoção de dados (CRUD).
 
 ### ✅ **Requisitos Mínimos**
-1. 8 Classes ✅
-2. Encapsulamento de todas as entidades ✅❌
+1. 8 Classes ❌
+2. Encapsulamento de todas as entidades ✅❌  
 3. 2 Heranças ❌
-a. Classes Bases Diferentes ❌
-4. Min 2 Polimorfismo ❌
-a. Classes Bases diferentes ✅
-5. CRUD ✅
-  a. Criar, ler, atualizar e remover registros de 6 entidades. ❌
-  b. Implementar a sobrecarga do operador << para exibir as entidades no console ❌
-6. Tratamento de exceções ❌
-  a. Exceções personalizadas ❌
-  b. Tratar validação de dados com exceções ❌
-7. Diagrama de Classes – UML ✅
-8. Funcionamento do Sistema ✅
-  a. interação com usuário ✅
+4. Classes Bases Diferentes ❌
+5. Min 2 Polimorfismo ❌
+6. Classes Bases diferentes ✅
+7. Criar, ler, atualizar e remover registros de 6 entidades. ❌
+8. Implementar a sobrecarga do operador << para exibir as entidades no console ❌
+9. Tratamento de exceções ❌
+10. Exceções personalizadas ❌
+11. Tratar validação de dados com exceções ❌
+12. Diagrama de Classes – UML ✅
+13. Funcionamento do Sistema ✅
+a. interação com usuário ✅
 
 
 ### ✅ **Observações**
