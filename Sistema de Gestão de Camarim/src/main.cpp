@@ -25,7 +25,7 @@ void menuSub(){
 int main(){
     int opcao1, opcao2;
     
-    while (opcao1 != -1){
+    do {
         menuPrincipal();
         cout << "\nDigite uma opção: ";
         
@@ -34,7 +34,7 @@ int main(){
         
             switch(opcao1){
                 case 1: 
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 1.Usários e aguarda interação
                     
                     cout << "Menu de Usuários: \n";
@@ -60,12 +60,12 @@ int main(){
                         break;
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 break;
                 
                 
                 case 2:  
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 2.Estoque e aguarda interação
                     
                     cout << "Menu de Estoque: \n";
@@ -93,12 +93,12 @@ int main(){
                         
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 
                 break;
                 
                 case 3:  
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 3.Camarim e aguarda interação
                     
                     cout << "Menu de Camarim: \n";
@@ -131,12 +131,12 @@ int main(){
                         
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 
                 break;
                 
                 case 4:  
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 4.Artistas e aguarda interação
                     
                     cout << "Menu de Artistas: \n";
@@ -166,12 +166,12 @@ int main(){
                         
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 
                 break;
                 
                 case 5:  
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 4.Lista de Pedidos e aguarda interação
                     
                     cout << "Menu de Lista de Pedidos: \n";
@@ -200,12 +200,12 @@ int main(){
                         
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 
                 break;
                 
                 case 6:  
-                while (opcao2 != 0){
+                do {
                     //Chama o submenu 5.Lista de Compras e aguarda interação
                     
                     cout << "Menu de Lista de Compras: \n";
@@ -234,7 +234,7 @@ int main(){
                         
                         default: cout <<"Digite uma opção válida...\n" << endl;
                     }
-                }
+                } while (opcao2 != 0);
                 
                 break;
                 
@@ -245,7 +245,7 @@ int main(){
             
         
     
-    };
+    } while (opcao1 != 0);
     
     
 }
