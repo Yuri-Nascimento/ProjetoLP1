@@ -8,7 +8,7 @@
  * Implementa testes para todas as classes do sistema usando doctest.
  */
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 #include "pessoa.h"
 #include "usuario.h"
@@ -19,6 +19,24 @@
 #include "pedido.h"
 #include "listacompras.h"
 #include "excecoes.h"
+#include <cstdlib>
+
+int main(int argc, char** argv) {
+    // Configurar codificação UTF-8 no Windows
+    #ifdef _WIN32
+        system("chcp 65001 > nul");
+    #endif
+    
+    doctest::Context context;
+    context.applyCommandLine(argc, argv);
+    
+    int res = context.run();
+    
+    if(context.shouldExit())
+        return res;
+    
+    return res;
+}
 
 // ==================== Testes da Classe Usuario ====================
 

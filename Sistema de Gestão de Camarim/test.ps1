@@ -31,11 +31,11 @@ $command = "g++ $CFLAGS $sourceFiles -o bin/teste.exe"
 Invoke-Expression $command
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "`n✓ Compilação dos testes concluída com sucesso!" -ForegroundColor Green
+    Write-Host "`n[OK] Compilacao dos testes concluida com sucesso!" -ForegroundColor Green
     Write-Host "`nExecutando testes..." -ForegroundColor Cyan
     Write-Host "==========================================`n" -ForegroundColor Cyan
     & ".\bin\teste.exe"
 } else {
-    Write-Host "`n✗ Erro na compilação dos testes!" -ForegroundColor Red
+    Write-Host "`n[ERRO] Erro na compilacao dos testes!" -ForegroundColor Red
     exit 1
 }

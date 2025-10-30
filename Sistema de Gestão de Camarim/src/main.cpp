@@ -23,6 +23,11 @@ void menuSub(){
 
 
 int main(){
+    // Configurar codificação UTF-8 no Windows
+    #ifdef _WIN32
+        system("chcp 65001 > nul");
+    #endif
+    
     int opcao1, opcao2;
     
     do {

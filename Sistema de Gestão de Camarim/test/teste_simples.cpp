@@ -27,14 +27,14 @@ void testar(const string& nome, bool condicao) {
     testesExecutados++;
     if (condicao) {
         testesSucesso++;
-        cout << "✓ " << nome << endl;
+        cout << "[OK] " << nome << endl;
     } else {
-        cout << "✗ " << nome << " - FALHOU!" << endl;
+        cout << "[FALHA] " << nome << endl;
     }
 }
 
 void testeUsuario() {
-    cout << "\n=== Testes de Usuario ===" << endl;
+    cout << "\n=== Testes de Usuário ===" << endl;
     
     GerenciadorUsuarios gerenciador;
     
@@ -270,6 +270,11 @@ void testeExcecoes() {
 }
 
 int main() {
+    // Configurar codificação UTF-8 no Windows
+    #ifdef _WIN32
+        system("chcp 65001 > nul");
+    #endif
+    
     cout << "\n╔═══════════════════════════════════════════════╗" << endl;
     cout << "║  SISTEMA DE TESTES - GESTÃO DE CAMARIM      ║" << endl;
     cout << "╚═══════════════════════════════════════════════╝\n" << endl;
