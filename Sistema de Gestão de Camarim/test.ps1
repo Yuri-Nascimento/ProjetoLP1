@@ -13,14 +13,13 @@ $CFLAGS = "-Wall -Wextra -pedantic -std=c++17 -Iheader -Ilib"
 # Arquivos fonte (sem main.cpp)
 $SOURCES = @(
     "src/pessoa.cpp",
-    "src/usuario.cpp",
     "src/artista.cpp",
     "src/item.cpp",
     "src/estoque.cpp",
     "src/camarim.cpp",
     "src/pedido.cpp",
     "src/listacompras.cpp",
-    "test/teste_simples.cpp"
+    "test/teste.cpp"
 )
 
 # Compilar
