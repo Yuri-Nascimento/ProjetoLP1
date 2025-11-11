@@ -289,7 +289,7 @@ double lerDouble();  // Implementada em main.cpp
 ### Arquivos Criados:
 - **8 Headers (.h)**: pessoa, artista, item, estoque, camarim, pedido, listacompras, excecoes
 - **8 Implementações (.cpp)**: Um para cada header + main
-- **3 Scripts**: compile.ps1, makefile
+- **3 Scripts**: compilar.ps1, makefile
 - **3 Documentações**: README.md
 - **1 Diagrama**: diagrama.md (UML em Mermaid)
 
@@ -322,7 +322,7 @@ double lerDouble();  // Implementada em main.cpp
 ### Windows:
 ```powershell
 # Compilar e executar
-.\compile.ps1
+.\compilar.ps1
 
 ```
 

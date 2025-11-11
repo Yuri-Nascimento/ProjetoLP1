@@ -146,7 +146,7 @@ make          # Compilar tudo
 make run      # Executar programa
 
 # Windows PowerShell
-.\compile.ps1  # Compilar e executar
+.\compilar.ps1  # Compilar e executar
 ```
 
 #### ⚙️ **Requisitos:**

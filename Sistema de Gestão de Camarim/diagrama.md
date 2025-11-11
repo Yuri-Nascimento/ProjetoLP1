@@ -1,207 +1,234 @@
 classDiagram
       class Pessoa {
         <<abstract>>
+        #int id
         #string nome
-        #string email
-        #string telefone
+        +Pessoa()
+        +Pessoa(int id, string nome)
         +string exibir()* abstract
+        +getId() int
+        +setId(int id) void
         +getNome() string
         +setNome(string nome) void
     }
 
-    class Usuario {
-        -string login
-        -string senha
-        +string exibir() override
-        +getLogin() string
-        +setLogin(string login) void
-    }
-
     class Artista {
-        -string especialidade
-        -double cache
+        -int camarimId
+        +Artista()
+        +Artista(int id, string nome, int camarimId)
         +string exibir() override
-        +getEspecialidade() string
-        +setEspecialidade(string esp) void
+        +getCamarimId() int
+        +setCamarimId(int id) void
     }
 
     class Item {
         -int id
         -string nome
-        -string categoria
         -double preco
+        +Item()
+        +Item(int id, string nome, double preco)
         +getId() int
         +setId(int id) void
+        +getNome() string
+        +setNome(string nome) void
+        +getPreco() double
+        +setPreco(double preco) void
+        +exibir() string
     }
 
     class Estoque {
-        -vector~ItemEstoque~ itens
-        -int capacidadeMaxima
-        +adicionarItem(ItemEstoque item) void
-        +removerItem(int id) bool
-        +verificarDisponibilidade(int id) int
+        -map~int, ItemEstoque~ itens
+        +Estoque()
+        +adicionarItem(int itemId, string nome, int qtd) void
+        +removerItem(int itemId, int qtd) bool
+        +verificarDisponibilidade(int itemId, int qtd) bool
+        +listar() vector~ItemEstoque~
     }
 
     class Camarim {
-        -int numero
-        -string localizacao
-        -bool ocupado
-        -vector~ItemCamarim~ itens
-        +getNumero() int
-        +setNumero(int num) void
+        -int id
+        -string nome
+        -int artistaId
+        -map~int, ItemCamarim~ itens
+        +Camarim()
+        +Camarim(int id, string nome, int artistaId)
+        +getId() int
+        +setId(int id) void
+        +getNome() string
+        +setNome(string nome) void
+        +getArtistaId() int
+        +setArtistaId(int artistaId) void
+        +inserirItem(int itemId, string nome, int qtd) void
+        +removerItem(int itemId, int qtd) bool
+        +listarItens() vector~ItemCamarim~
     }
 
     class Pedido {
         -int id
-        -string data
-        -string status
-        -vector~ItemPedido~ itens
-        +calcularTotal() double
-        +adicionarItem(ItemPedido item) void
+        -int camarimId
+        -string nomeArtista
+        -map~int, ItemPedido~ itens
+        -bool atendido
+        +Pedido()
+        +Pedido(int id, int camarimId, string nomeArtista)
+        +getId() int
+        +setId(int id) void
+        +getCamarimId() int
+        +isAtendido() bool
+        +setAtendido(bool status) void
+        +adicionarItem(int itemId, string nome, int qtd) void
+        +listarItens() vector~ItemPedido~
     }
 
     class ListaCompras {
         -int id
-        -string nome
-        -vector~ItemCompra~ itens
+        -string descricao
+        -map~int, ItemCompra~ itens
+        +ListaCompras()
+        +ListaCompras(int id, string descricao)
+        +getId() int
+        +setId(int id) void
+        +getDescricao() string
+        +setDescricao(string desc) void
+        +adicionarItem(int itemId, string nome, int qtd, double preco) void
+        +removerItem(int itemId) bool
         +calcularTotal() double
-        +adicionarItem(ItemCompra item) void
-    }
-
-    class GerenciadorUsuarios {
-        -vector~Usuario~ usuarios
-        +adicionarUsuario(Usuario user) void
-        +removerUsuario(string login) bool
-        +buscarUsuario(string login) Usuario*
+        +listarItens() vector~ItemCompra~
     }
 
     class GerenciadorArtistas {
         -vector~Artista~ artistas
-        +adicionarArtista(Artista art) void
-        +removerArtista(string nome) bool
-        +buscarArtista(string nome) Artista*
+        -int proximoId
+        +GerenciadorArtistas()
+        +cadastrar(string nome, int camarimId) int
+        +buscarPorId(int id) Artista*
+        +buscarPorCamarim(int camarimId) vector~Artista~
+        +atualizar(int id, string nome, int camarimId) bool
+        +remover(int id) bool
+        +listar() vector~Artista~
     }
 
     class GerenciadorItens {
         -vector~Item~ itens
-        +adicionarItem(Item item) void
-        +removerItem(int id) bool
-        +buscarItem(int id) Item*
+        -int proximoId
+        +GerenciadorItens()
+        +cadastrar(string nome, double preco) int
+        +buscarPorId(int id) Item*
+        +buscarPorNome(string nome) Item*
+        +remover(int id) bool
+        +listar() vector~Item~
+        +atualizar(int id, string nome, double preco) bool
     }
 
     class GerenciadorCamarins {
         -vector~Camarim~ camarins
-        +alocarCamarim(Artista artista) Camarim*
-        +liberarCamarim(int numero) bool
+        -int proximoId
+        +GerenciadorCamarins()
+        +cadastrar(string nome, int artistaId) int
+        +buscarPorId(int id) Camarim*
+        +buscarPorArtista(int artistaId) Camarim*
+        +remover(int id) bool
+        +listar() vector~Camarim~
+        +atualizar(int id, string nome, int artistaId) bool
     }
 
     class GerenciadorPedidos {
         -vector~Pedido~ pedidos
-        +criarPedido() Pedido*
-        +processarPedido(int id) bool
-        +cancelarPedido(int id) bool
+        -int proximoId
+        +GerenciadorPedidos()
+        +criar(int camarimId, string nomeArtista) int
+        +buscarPorId(int id) Pedido*
+        +buscarPorCamarim(int camarimId) vector~Pedido~
+        +listarPendentes() vector~Pedido~
+        +remover(int id) bool
+        +listar() vector~Pedido~
     }
 
     class GerenciadorListaCompras {
         -vector~ListaCompras~ listas
-        +criarLista(string nome) ListaCompras*
-        +adicionarItemLista(int listaId, ItemCompra item) bool
+        -int proximoId
+        +GerenciadorListaCompras()
+        +criar(string descricao) int
+        +buscarPorId(int id) ListaCompras*
+        +remover(int id) bool
+        +listar() vector~ListaCompras~
     }
 
     class ExcecaoBase {
         <<abstract>>
         #string mensagem
-        #string timestamp
-        +const char* what()* abstract
-        +getMensagem() string
-        +getTimestamp() string
+        +ExcecaoBase(string msg)
+        +const char* what() override
     }
 
     class ValidacaoException {
-        -string campo
-        +const char* what() override
-    }
-
-    class UsuarioNaoEncontradoException {
-        -string login
-        +const char* what() override
-    }
-
-    class UsuarioJaExisteException {
-        -string login
+        +ValidacaoException(string msg)
         +const char* what() override
     }
 
     class ArtistaException {
-        -string artistaNome
+        +ArtistaException(string msg)
         +const char* what() override
     }
 
     class ItemException {
-        -int itemId
+        +ItemException(string msg)
         +const char* what() override
     }
 
     class EstoqueException {
-        -int itemId
+        +EstoqueException(string msg)
         +const char* what() override
     }
 
     class EstoqueInsuficienteException {
-        -int itemId
-        -int quantidadeRequisitada
-        -int quantidadeDisponivel
+        +EstoqueInsuficienteException(string msg)
         +const char* what() override
     }
 
     class CamarimException {
-        -int camarimNumero
+        +CamarimException(string msg)
         +const char* what() override
     }
 
     class PedidoException {
-        -int pedidoId
+        +PedidoException(string msg)
         +const char* what() override
     }
 
     class ListaComprasException {
-        -int listaId
+        +ListaComprasException(string msg)
         +const char* what() override
     }
 
     class ItemEstoque {
         +int itemId
+        +string nomeItem
         +int quantidade
-        +string localizacao
-        +int getQuantidade() int
-        +void setQuantidade(int qtd) void
     }
 
     class ItemCamarim {
         +int itemId
+        +string nomeItem
         +int quantidade
-        +string observacao
     }
 
     class ItemPedido {
         +int itemId
+        +string nomeItem
         +int quantidade
-        +double precoUnitario
-        +double calcularSubtotal() double
     }
 
     class ItemCompra {
         +int itemId
+        +string nomeItem
         +int quantidade
-        +bool comprado
-        +marcarComoComprado() void
+        +double preco
+        +double subtotal
     }
 
-    Pessoa <|-- Usuario
     Pessoa <|-- Artista
     ExcecaoBase <|-- ValidacaoException
-    ExcecaoBase <|-- UsuarioNaoEncontradoException
-    ExcecaoBase <|-- UsuarioJaExisteException
     ExcecaoBase <|-- ArtistaException
     ExcecaoBase <|-- ItemException
     ExcecaoBase <|-- EstoqueException
@@ -215,7 +242,6 @@ classDiagram
     Pedido "1" *-- "0..*" ItemPedido
     ListaCompras "1" *-- "0..*" ItemCompra
     
-    GerenciadorUsuarios "1" --> "0..*" Usuario
     GerenciadorArtistas "1" --> "0..*" Artista
     GerenciadorItens "1" --> "0..*" Item
     GerenciadorCamarins "1" --> "0..*" Camarim
