@@ -88,18 +88,6 @@ int Estoque::obterQuantidade(int itemId) const {
     return it->second.quantidade;
 }
 
-// Remove completamente um item do estoque
-bool Estoque::removerItemCompleto(int itemId) {
-    auto it = itens.find(itemId);
-    
-    if (it == itens.end()) {
-        return false;
-    }
-    
-    itens.erase(itemId);
-    return true;
-}
-
 // Lista todos os itens em estoque
 vector<ItemEstoque> Estoque::listar() const {
     vector<ItemEstoque> lista;

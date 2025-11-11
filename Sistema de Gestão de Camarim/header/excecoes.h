@@ -58,26 +58,6 @@ public:
 };
 
 /**
- * @class UsuarioNaoEncontradoException
- * @brief Exceção quando usuário não é encontrado
- */
-class UsuarioNaoEncontradoException : public ExcecaoBase {
-public:
-    explicit UsuarioNaoEncontradoException(const string& msg)
-        : ExcecaoBase("Usuário não encontrado: " + msg) {}
-};
-
-/**
- * @class UsuarioJaExisteException
- * @brief Exceção quando usuário já existe no sistema
- */
-class UsuarioJaExisteException : public ExcecaoBase {
-public:
-    explicit UsuarioJaExisteException(const string& msg)
-        : ExcecaoBase("Usuário já existe: " + msg) {}
-};
-
-/**
  * @class ArtistaException
  * @brief Exceção relacionada a operações com artistas
  */

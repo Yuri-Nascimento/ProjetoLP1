@@ -102,44 +102,6 @@ bool Camarim::removerItem(int itemId, int quantidade) {
     return true;
 }
 
-// Verifica se item existe no camarim
-bool Camarim::contemItem(int itemId) const {
-    return itens.find(itemId) != itens.end();
-}
-
-// Obtém quantidade de um item
-int Camarim::obterQuantidadeItem(int itemId) const {
-    auto it = itens.find(itemId);
-    
-    if (it == itens.end()) {
-        return 0;
-    }
-    
-    return it->second.quantidade;
-}
-
-// Lista todos os itens do camarim
-vector<ItemCamarim> Camarim::listarItens() const {
-    vector<ItemCamarim> lista;
-    
-    for (const auto& par : itens) {
-        lista.push_back(par.second);
-    }
-    
-    return lista;
-}
-
-// Calcula total de itens
-int Camarim::calcularTotalItens() const {
-    int total = 0;
-    
-    for (const auto& par : itens) {
-        total += par.second.quantidade;
-    }
-    
-    return total;
-}
-
 // Exibe informações do camarim
 string Camarim::exibir() const {
     stringstream ss;
@@ -147,7 +109,14 @@ string Camarim::exibir() const {
     ss << "ID: " << id << endl;
     ss << "Nome: " << nome << endl;
     ss << "Artista ID: " << artistaId << endl;
-    ss << "Total de itens: " << calcularTotalItens() << endl;
+    
+    // Calcula total de itens inline
+    int total = 0;
+    for (const auto& par : itens) {
+        total += par.second.quantidade;
+    }
+    ss << "Total de itens: " << total << endl;
+    
     ss << "\nItens:" << endl;
     
     if (itens.empty()) {

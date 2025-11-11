@@ -80,13 +80,6 @@ public:
     int obterQuantidade(int itemId) const;
     
     /**
-     * @brief Remove completamente um item do estoque
-     * @param itemId ID do item
-     * @return true se removido
-     */
-    bool removerItemCompleto(int itemId);
-    
-    /**
      * @brief Lista todos os itens em estoque
      * @return Vector com itens do estoque
      */

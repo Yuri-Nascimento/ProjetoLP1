@@ -95,12 +95,6 @@ public:
     void atualizarQuantidade(int itemId, int quantidade);
     
     /**
-     * @brief Lista itens da compra
-     * @return Vector com itens
-     */
-    vector<ItemCompra> listarItens() const;
-    
-    /**
      * @brief Calcula total da lista de compras
      * @return Valor total
      */

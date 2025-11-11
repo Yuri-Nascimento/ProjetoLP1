@@ -91,12 +91,6 @@ public:
     bool removerItem(int itemId);
     
     /**
-     * @brief Lista itens do pedido
-     * @return Vector com itens
-     */
-    vector<ItemPedido> listarItens() const;
-    
-    /**
      * @brief Marca pedido como atendido
      */
     void marcarAtendido();

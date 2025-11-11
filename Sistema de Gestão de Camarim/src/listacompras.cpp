@@ -101,17 +101,6 @@ void ListaCompras::atualizarQuantidade(int itemId, int quantidade) {
     itens[itemId].subtotal = quantidade * itens[itemId].preco;
 }
 
-// Lista itens da compra
-vector<ItemCompra> ListaCompras::listarItens() const {
-    vector<ItemCompra> lista;
-    
-    for (const auto& par : itens) {
-        lista.push_back(par.second);
-    }
-    
-    return lista;
-}
-
 // Calcula total da lista de compras
 double ListaCompras::calcularTotal() const {
     double total = 0.0;

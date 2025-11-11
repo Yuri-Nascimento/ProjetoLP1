@@ -89,32 +89,6 @@ public:
     bool removerItem(int itemId, int quantidade);
     
     /**
-     * @brief Verifica se item existe no camarim
-     * @param itemId ID do item
-     * @return true se existe
-     */
-    bool contemItem(int itemId) const;
-    
-    /**
-     * @brief Obtém quantidade de um item no camarim
-     * @param itemId ID do item
-     * @return Quantidade
-     */
-    int obterQuantidadeItem(int itemId) const;
-    
-    /**
-     * @brief Lista todos os itens do camarim
-     * @return Vector com itens
-     */
-    vector<ItemCamarim> listarItens() const;
-    
-    /**
-     * @brief Calcula total de itens no camarim
-     * @return Total de itens
-     */
-    int calcularTotalItens() const;
-    
-    /**
      * @brief Exibe informações do camarim
      * @return String formatada
      */

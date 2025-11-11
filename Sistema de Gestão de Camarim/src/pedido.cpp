@@ -109,17 +109,6 @@ bool Pedido::removerItem(int itemId) {
     return true;
 }
 
-// Lista itens do pedido
-vector<ItemPedido> Pedido::listarItens() const {
-    vector<ItemPedido> lista;
-    
-    for (const auto& par : itens) {
-        lista.push_back(par.second);
-    }
-    
-    return lista;
-}
-
 // Marca pedido como atendido
 void Pedido::marcarAtendido() {
     atendido = true;
