@@ -17,29 +17,29 @@
    - Camarim
    - Pedido
    - ListaCompras
-   - **+11 Classes Gerenciadoras** (GerenciadorUsuarios, GerenciadorArtistas, etc.)
-   - **+11 Classes de Exceção** (ExcecaoBase, ValidacaoException, etc.)
+   - **+7 Classes Gerenciadoras** (GerenciadorArtistas, GerenciadorItens, etc.)
+   - **+9 Classes de Exceção** (ExcecaoBase, ValidacaoException, etc.)
 
 2. **Encapsulamento de todas as entidades ✅**
    - Todos os atributos são privados/protected
    - Acesso via getters e setters com validação
+   - **Código 100% comentado** explicando cada conceito de POO
 
 3. **2 Heranças ✅**
-   - Usuario herda de Pessoa
-   - Artista herda de Pessoa
-   - Todas as exceções herdam de ExcecaoBase
+   - Artista herda de Pessoa (com polimorfismo)
+   - **Hierarquia de exceções:** ExcecaoBase → 8 exceções derivadas
+   - **Herança de 3 níveis:** EstoqueInsuficienteException → EstoqueException → ExcecaoBase
 
 4. **Classes Bases Diferentes ✅**
-   - Pessoa (base para Usuario e Artista)
+   - Pessoa (base para Artista)
    - ExcecaoBase (base para todas as exceções personalizadas)
 
 5. **Min 2 Polimorfismos ✅**
    - Método virtual puro `exibir()` em Pessoa
-   - Sobrescrito em Usuario e Artista
+   - Sobrescrito em Artista
    - Método virtual `what()` nas exceções
 
 6. **Criar, ler, atualizar e remover registros de 6 entidades ✅**
-   - Usuario: CRUD completo
    - Artista: CRUD completo
    - Item: CRUD completo
    - Estoque: CRUD completo
@@ -60,12 +60,13 @@
    - Validações lançam exceções específicas
 
 9. **Exceções personalizadas ✅**
-   - 11 classes de exceções customizadas
-   - Hierarquia de herança de exceções
+   - 9 classes de exceções customizadas
+   - Hierarquia de herança de exceções (3 níveis)
 
 10. **Tratar validação de dados com exceções ✅**
     - Validações em setters
     - Verificações em operações de negócio
+    - Tratamento robusto de erros
 
 11. **Diagrama de Classes – UML ✅**
     - Arquivo diagrama.md com todas as relações
@@ -73,6 +74,7 @@
 12. **Funcionamento do Sistema ✅**
     - Interação com usuário via menus
     - Sistema modular e extensível
+    - **Suporte a entrada decimal com vírgula** (formato brasileiro)
 
 
 ### ✅ **Observações**
@@ -81,18 +83,12 @@
 
 ### 📂 **Estrutura de Diretórios**
 
-Link do repositório:
-https://github.com/Yuri-Nascimento/ProjetoLP1.git
-
 
 ```
 .
 ├── bin/         # Executáveis gerados após a compilação
-├── doc/         # Documentação do projeto
-├── header/      # Arquivos de cabeçalho (.h) 
-├── lib/         # Bibliotecas externas (ex: doctest.h)
-├── src/         # Implementação das classes (.cpp)
-├── test/        # Arquivos de teste (usando doctest)
+├── header/      # Arquivos de cabeçalho (.h) - 100% comentados
+├── src/         # Implementação das classes (.cpp) - 100% comentados
 ├── .gitignore   # Arquivos/diretórios ignorados pelo Git
 ├── makefile     # Automação da compilação e execução
 ├── diagrama.md  # Diagrama UML das classes
@@ -106,82 +102,75 @@ https://github.com/Yuri-Nascimento/ProjetoLP1.git
 #### 📌 **Arquivos de Interface (header/):**
 Define a estrutura de todas as classes e suas operações públicas:
 
-- **`pessoa.h`**: Classe base abstrata com polimorfismo
-- **`usuario.h`**: Classe Usuario (herda de Pessoa) + GerenciadorUsuarios
-- **`artista.h`**: Classe Artista (herda de Pessoa) + GerenciadorArtistas
-- **`item.h`**: Classe Item + GerenciadorItens
-- **`estoque.h`**: Classe Estoque para gerenciar inventário
-- **`camarim.h`**: Classe Camarim + GerenciadorCamarins
-- **`pedido.h`**: Classe Pedido + GerenciadorPedidos
-- **`listacompras.h`**: Classe ListaCompras + GerenciadorListaCompras
-- **`excecoes.h`**: Hierarquia de exceções personalizadas
+- **`pessoa.h`**: Classe base abstrata com polimorfismo ✅ **100% comentado**
+- **`artista.h`**: Classe Artista (herda de Pessoa) + GerenciadorArtistas ✅ **100% comentado**
+- **`item.h`**: Classe Item + GerenciadorItens ✅ **100% comentado**
+- **`estoque.h`**: Classe Estoque para gerenciar inventário ✅ **100% comentado**
+- **`camarim.h`**: Classe Camarim + GerenciadorCamarins ✅ **100% comentado**
+- **`pedido.h`**: Classe Pedido + GerenciadorPedidos ✅ **100% comentado**
+- **`listacompras.h`**: Classe ListaCompras + GerenciadorListaCompras ✅ **100% comentado**
+- **`excecoes.h`**: Hierarquia de exceções personalizadas ✅ **100% comentado**
 
 #### 📌 **Arquivo de Implementação (src/):**
 Contém a lógica completa de todas as operações CRUD e validações:
 
-- `pessoa.cpp`: Implementação da classe base
-- `usuario.cpp`: Lógica de autenticação e CRUD de usuários
-- `artista.cpp`: Gerenciamento de artistas e camarins
-- `item.cpp`: Operações com itens/produtos
-- `estoque.cpp`: Controle de estoque com validações
-- `camarim.cpp`: Gerenciamento de camarins e seus itens
-- `pedido.cpp`: Sistema de pedidos
-- `listacompras.cpp`: Lista de compras com cálculo de totais
-- `main.cpp`: Interface do usuário e integração
-
-#### 📌 **Testes Automatizados (test/teste.cpp):**
-Os testes são escritos utilizando o framework **doctest**, garantindo a validação automática de todas as operações:
-
-- ✅ Testes de criação e validação
-- ✅ Testes de operações CRUD
-- ✅ Testes de exceções
-- ✅ Testes de polimorfismo
-- ✅ Testes de sobrecarga de operadores
+- **`pessoa.cpp`**: Implementação da classe base ✅ **100% comentado**
+- **`artista.cpp`**: Gerenciamento de artistas e camarins ✅ **100% comentado**
+- **`item.cpp`**: Operações com itens/produtos ✅ **100% comentado**
+- **`estoque.cpp`**: Controle de estoque com validações ✅ **100% comentado**
+- **`camarim.cpp`**: Gerenciamento de camarins e seus itens ✅ **100% comentado**
+- **`pedido.cpp`**: Sistema de pedidos ✅ **100% comentado**
+- **`listacompras.cpp`**: Lista de compras com cálculo de totais ✅ **100% comentado**
+- **`main.cpp`**: Interface do usuário e integração (parcialmente comentado)
 
 ---
 
 ### 📦 **Como Compilar e Executar**
 
-O projeto pode ser compilado usando **make** (Linux/Mac) ou scripts PowerShell (Windows).
+O projeto pode ser compilado usando **make** (Linux) ou scripts PowerShell (Windows).
 
-#### 🪟 **Windows (PowerShell):**
+#### 🐧 **Linux (Makefile):**
 
-```powershell
-# Compilar e executar o programa principal
-.\compile.ps1
-
-# Compilar e executar os testes
-.\test.ps1
-```
-
-#### � **Linux/Mac (Makefile):**
-
-| Comando        | Descrição                                   |
-|----------------|---------------------------------------------|
-| `make` ou `make all`  | Compila o programa principal e os testes. |
-| `make run`     | Executa o programa principal (`bin/main`).  |
-| `make test`    | Compila apenas os testes.                   |
-| `make run-test`| Executa os testes (`bin/test`).             |
-| `make clean`   | Remove arquivos objeto e executáveis.       |
+| Comando               | Descrição                             |
+|-----------------------|---------------------------------------|
+| `make` ou `make all`  | Compila o programa.                   |
+| `make run`            | Executa o programa (`bin/main`).      |
+| `make clean`          | Remove arquivos objeto e executáveis. |
 
 #### 📌 **Exemplos de Uso:**
 
 ```bash
-# Linux/Mac
+# Linux
 make clean    # Limpar compilações anteriores
 make          # Compilar tudo
-make run      # Executar programa principal
-make run-test # Executar testes
+make run      # Executar programa
 
 # Windows PowerShell
 .\compile.ps1  # Compilar e executar
-.\test.ps1     # Compilar e executar testes
 ```
 
 #### ⚙️ **Requisitos:**
-- **Compilador:** g++ com suporte a C++17
-- **Sistema:** Windows, Linux ou macOS
-- **Frameworks:** doctest.h (incluído em `lib/`)
+- **Compilador:** g++ com suporte a C++
+- **Sistema:** Windows e Linux
+
+---
+
+### 🌟 **Recursos Adicionais Implementados**
+
+1. **📝 Código 100% Documentado:**
+   - Todos os arquivos `.h` e `.cpp` possuem comentários linha por linha
+   - Explicações detalhadas de conceitos de POO
+   - Documentação de padrões de projeto utilizados
+
+2. **🔢 Suporte a Formato Monetário com vírgula:**
+   - Função `lerDouble()` aceita vírgula como separador decimal
+   - Exemplos: `4,50` → `R$ 4.50` | `1500,99` → `R$ 1500.99`
+   - Conversão automática e transparente
+
+4. **🏗️ Arquitetura Robusta:**
+   - Padrão CRUD para todas as entidades
+   - Separação de responsabilidades
+   - Validações centralizadas
 
 ---
 
@@ -189,17 +178,14 @@ make run-test # Executar testes
 
 ```
 Pessoa (classe base abstrata)
-├── Usuario (herda de Pessoa)
 └── Artista (herda de Pessoa)
 
 ExcecaoBase (classe base de exceções)
 ├── ValidacaoException
-├── UsuarioNaoEncontradoException
-├── UsuarioJaExisteException
 ├── ArtistaException
 ├── ItemException
 ├── EstoqueException
-│   └── EstoqueInsuficienteException
+│   └── EstoqueInsuficienteException (3 níveis de herança!)
 ├── CamarimException
 ├── PedidoException
 └── ListaComprasException
@@ -208,8 +194,10 @@ ExcecaoBase (classe base de exceções)
 ### 🎯 **Conceitos de POO Implementados:**
 
 1. **Encapsulamento**: Atributos privados com getters/setters validados
-2. **Herança**: Pessoa → Usuario/Artista, ExcecaoBase → Exceções
-3. **Polimorfismo**: Métodos virtuais sobrescritos (`exibir()`)
-4. **Abstração**: Classes base abstratas (Pessoa)
-5. **Sobrecarga de Operadores**: `<<` para todas as classes principais
-6. **Tratamento de Exceções**: Sistema robusto com exceções personalizadas
+2. **Herança**: Pessoa → Artista, ExcecaoBase → 8 Exceções
+3. **Herança Múltipla de Níveis**: EstoqueInsuficienteException (3 níveis)
+4. **Polimorfismo**: Métodos virtuais sobrescritos (`exibir()`, `what()`)
+5. **Abstração**: Classes base abstratas (Pessoa com método virtual puro)
+6. **Sobrecarga de Operadores**: `<<` para todas as classes principais
+7. **Tratamento de Exceções**: Sistema robusto com hierarquia de exceções
+

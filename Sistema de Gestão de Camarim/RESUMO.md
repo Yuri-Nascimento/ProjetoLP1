@@ -15,44 +15,41 @@
 ## 🎯 REQUISITOS ATENDIDOS (100%)
 
 ### ✅ 1. Oito Classes ou Mais
-**ATENDIDO** - Implementadas **30+ classes**:
+**ATENDIDO** - Implementadas **24+ classes**:
 
-#### Classes Principais (8):
-1. ✅ `Pessoa` - Classe base abstrata
-2. ✅ `Usuario` - Herda de Pessoa
-3. ✅ `Artista` - Herda de Pessoa
-4. ✅ `Item` - Representa produtos
-5. ✅ `Estoque` - Gerencia inventário
-6. ✅ `Camarim` - Gerencia camarins
-7. ✅ `Pedido` - Gerencia pedidos
-8. ✅ `ListaCompras` - Lista de compras
+#### Classes Principais (7):
+1. ✅ `Pessoa` - Classe base abstrata com polimorfismo
+2. ✅ `Artista` - Herda de Pessoa (herança e sobrescrita de métodos)
+3. ✅ `Item` - Representa produtos do catálogo
+4. ✅ `Estoque` - Gerencia inventário com validações
+5. ✅ `Camarim` - Gerencia camarins e seus itens
+6. ✅ `Pedido` - Gerencia pedidos de itens
+7. ✅ `ListaCompras` - Lista de compras com cálculo de totais
 
 #### Classes Gerenciadoras (7):
-9. ✅ `GerenciadorUsuarios`
-10. ✅ `GerenciadorArtistas`
-11. ✅ `GerenciadorItens`
-12. ✅ `GerenciadorCamarins`
-13. ✅ `GerenciadorPedidos`
-14. ✅ `GerenciadorListaCompras`
+8. ✅ `GerenciadorArtistas` - CRUD de artistas
+9. ✅ `GerenciadorItens` - CRUD de itens (catálogo centralizado)
+10. ✅ `GerenciadorCamarins` - CRUD de camarins
+11. ✅ `GerenciadorPedidos` - CRUD de pedidos
+12. ✅ `GerenciadorListaCompras` - CRUD de listas de compras
+13. ✅ `GerenciadorEstoque` - Controle de estoque
 
-#### Classes de Exceções (11):
-15. ✅ `ExcecaoBase` - Classe base
-16. ✅ `ValidacaoException`
-17. ✅ `UsuarioNaoEncontradoException`
-18. ✅ `UsuarioJaExisteException`
-19. ✅ `ArtistaException`
-20. ✅ `ItemException`
-21. ✅ `EstoqueException`
-22. ✅ `EstoqueInsuficienteException`
-23. ✅ `CamarimException`
-24. ✅ `PedidoException`
-25. ✅ `ListaComprasException`
+#### Classes de Exceções (9):
+14. ✅ `ExcecaoBase` - Classe base de exceções
+15. ✅ `ValidacaoException` - Validação de dados
+16. ✅ `ArtistaException` - Exceções relacionadas a artistas
+17. ✅ `ItemException` - Exceções relacionadas a itens
+18. ✅ `EstoqueException` - Exceções de estoque
+19. ✅ `EstoqueInsuficienteException` - Herda de EstoqueException (**3 níveis de herança!**)
+20. ✅ `CamarimException` - Exceções de camarins
+21. ✅ `PedidoException` - Exceções de pedidos
+22. ✅ `ListaComprasException` - Exceções de listas de compras
 
-#### Structs Auxiliares (5):
-26. ✅ `ItemEstoque`
-27. ✅ `ItemCamarim`
-28. ✅ `ItemPedido`
-29. ✅ `ItemCompra`
+#### Structs Auxiliares (4):
+23. ✅ `ItemEstoque` - Item com quantidade no estoque
+24. ✅ `ItemCamarim` - Item com quantidade no camarim
+25. ✅ `ItemPedido` - Item com quantidade no pedido
+26. ✅ `ItemCompra` - Item com preço e quantidade na lista
 
 ---
 
@@ -60,51 +57,63 @@
 **ATENDIDO** - Todos os atributos são `private` ou `protected`:
 
 ```cpp
-class Usuario : public Pessoa {
+class Artista : public Pessoa {
 private:  // ✅ Atributos privados
-    string login;
-    string senha;
+    int idCamarim;
     
 public:   // ✅ Acesso via getters/setters
-    string getLogin() const;
-    void setLogin(const string& login);  // Com validação
+    int getIdCamarim() const;
+    void setIdCamarim(int id);  // Com validação
+};
+
+class Item {
+private:  // ✅ Encapsulamento completo
+    int id;
+    string nome;
+    double preco;
+    int quantidade;
+    
+public:   // ✅ Métodos públicos controlam acesso
+    double getPreco() const;
+    void setPreco(double preco);  // Valida preco >= 0
 };
 ```
 
+**✅ Código 100% comentado explicando cada conceito de POO!**  
 **Validações implementadas em TODOS os setters!**
 
 ---
 
 ### ✅ 3. Duas ou Mais Heranças
-**ATENDIDO** - Duas hierarquias completas:
+**ATENDIDO** - Duas hierarquias completas, incluindo **herança de 3 níveis**:
 
 #### Hierarquia 1: Pessoas
 ```
      Pessoa (abstrata)
          ↓
-    ┌────┴────┐
-    ↓         ↓
-Usuario   Artista
+     Artista
 ```
 
-#### Hierarquia 2: Exceções
+#### Hierarquia 2: Exceções (com 3 níveis!)
 ```
-       ExcecaoBase
+       ExcecaoBase (nível 1)
             ↓
-    ┌───────┼───────┐
-    ↓       ↓       ↓
-  Valid  Usuario Estoque
-           Except  Exception
-                      ↓
-              EstoqueInsuf...
+    ┌───────┼───────────┐
+    ↓       ↓           ↓
+  Valid  Artista   EstoqueException (nível 2)
+  Exception Exception      ↓
+                    EstoqueInsuficienteException (nível 3) ⭐
 ```
+
+**⭐ Destaque:** `EstoqueInsuficienteException` demonstra herança de **3 níveis**:
+- `exception` (std) → `ExcecaoBase` → `EstoqueException` → `EstoqueInsuficienteException`
 
 ---
 
 ### ✅ 4. Classes Bases Diferentes
 **ATENDIDO** - Duas classes base distintas:
-1. ✅ `Pessoa` - Base para entidades de pessoas
-2. ✅ `ExcecaoBase` - Base para exceções
+1. ✅ `Pessoa` - Classe base abstrata para entidades de pessoas
+2. ✅ `ExcecaoBase` - Classe base para sistema de exceções
 
 ---
 
@@ -114,11 +123,8 @@ Usuario   Artista
 #### Polimorfismo 1: Método exibir()
 ```cpp
 class Pessoa {
-    virtual string exibir() const = 0;  // Virtual puro
-};
-
-class Usuario : public Pessoa {
-    string exibir() const override;  // ✅ Sobrescrito
+    virtual string exibir() const = 0;  // Virtual puro (abstrato)
+    virtual ~Pessoa() = default;         // Destrutor virtual
 };
 
 class Artista : public Pessoa {
@@ -132,32 +138,33 @@ class ExcecaoBase : public exception {
     virtual const char* what() const noexcept override;
 };
 
-// Todas as exceções sobrescrevem what()
+// Todas as 8 exceções derivadas sobrescrevem what()
 ```
 
 #### Demonstração Prática:
 ```cpp
-Pessoa* p1 = new Usuario(...);
-Pessoa* p2 = new Artista(...);
+Pessoa* p = new Artista(1, "Maria Silva", 10);
 
-cout << p1->exibir();  // ✅ Chama Usuario::exibir()
-cout << p2->exibir();  // ✅ Chama Artista::exibir()
+cout << p->exibir();  // ✅ Chama Artista::exibir() (polimorfismo em tempo de execução)
+
+delete p;  // ✅ Destrutor virtual garante limpeza correta
 ```
 
 ---
 
 ### ✅ 6. CRUD Completo para 6+ Entidades
-**ATENDIDO** - CRUD para 7 entidades:
+**ATENDIDO** - CRUD para 6 entidades principais:
 
 | Entidade | Create | Read | Update | Delete |
 |----------|--------|------|--------|--------|
-| Usuario  | ✅ | ✅ | ✅ | ✅ |
 | Artista  | ✅ | ✅ | ✅ | ✅ |
 | Item     | ✅ | ✅ | ✅ | ✅ |
 | Estoque  | ✅ | ✅ | ✅ | ✅ |
 | Camarim  | ✅ | ✅ | ✅ | ✅ |
 | Pedido   | ✅ | ✅ | ✅ | ✅ |
 | ListaCompras | ✅ | ✅ | ✅ | ✅ |
+
+**📚 Todas as operações CRUD totalmente comentadas no código!**
 
 ---
 
@@ -214,19 +221,17 @@ try {
 ---
 
 ### ✅ 9. Exceções Personalizadas
-**ATENDIDO** - 11 classes de exceções customizadas:
+**ATENDIDO** - 9 classes de exceções customizadas (incluindo 3 níveis de herança):
 
-1. ✅ `ExcecaoBase` - Classe base
-2. ✅ `ValidacaoException` - Validação de dados
-3. ✅ `UsuarioNaoEncontradoException`
-4. ✅ `UsuarioJaExisteException`
-5. ✅ `ArtistaException`
-6. ✅ `ItemException`
-7. ✅ `EstoqueException`
-8. ✅ `EstoqueInsuficienteException` - Herda de EstoqueException
-9. ✅ `CamarimException`
-10. ✅ `PedidoException`
-11. ✅ `ListaComprasException`
+1. ✅ `ExcecaoBase` - Classe base de exceções
+2. ✅ `ValidacaoException` - Validação de dados de entrada
+3. ✅ `ArtistaException` - Exceções de artistas
+4. ✅ `ItemException` - Exceções de itens
+5. ✅ `EstoqueException` - Exceções de estoque (nível 2)
+6. ✅ `EstoqueInsuficienteException` - Herda de EstoqueException ⭐ **(nível 3)**
+7. ✅ `CamarimException` - Exceções de camarins
+8. ✅ `PedidoException` - Exceções de pedidos
+9. ✅ `ListaComprasException` - Exceções de listas de compras
 
 ---
 
@@ -234,22 +239,29 @@ try {
 **ATENDIDO** - Validações em TODOS os setters e operações:
 
 ```cpp
-void Usuario::setLogin(const string& login) {
-    if (login.empty()) {
-        throw ValidacaoException("Login não pode ser vazio");
-    }
-    if (login.length() < 3) {
-        throw ValidacaoException("Login deve ter pelo menos 3 caracteres");
-    }
-    this->login = login;
-}
-
 void Item::setPreco(double preco) {
     if (preco < 0) {
         throw ValidacaoException("Preço não pode ser negativo");
     }
     this->preco = preco;
 }
+
+void Estoque::removerItem(int id, int quantidade) {
+    // ... código de verificação ...
+    if (it->quantidade < quantidade) {
+        throw EstoqueInsuficienteException(
+            "Quantidade insuficiente no estoque"
+        );
+    }
+    // ... resto da operação ...
+}
+```
+
+**🔢 Suporte a entrada decimal brasileira:**
+```cpp
+// Função lerDouble() aceita vírgula como separador decimal
+// Exemplos: 4,50 → R$ 4.50 | 1500,99 → R$ 1500.99
+double lerDouble();  // Implementada em main.cpp
 ```
 
 ---
@@ -275,25 +287,17 @@ void Item::setPreco(double preco) {
 ## 📊 ESTATÍSTICAS DO PROJETO
 
 ### Arquivos Criados:
-- **9 Headers (.h)**: pessoa, usuario, artista, item, estoque, camarim, pedido, listacompras, excecoes
-- **9 Implementações (.cpp)**: Um para cada header + main
-- **2 Arquivos de Teste**: teste.cpp, teste_simples.cpp
-- **3 Scripts**: compile.ps1, test.ps1, makefile
-- **2 Documentações**: README.md, DOCUMENTACAO_TECNICA.md
-- **1 Diagrama**: diagrama.md
+- **8 Headers (.h)**: pessoa, artista, item, estoque, camarim, pedido, listacompras, excecoes
+- **8 Implementações (.cpp)**: Um para cada header + main
+- **3 Scripts**: compile.ps1, makefile
+- **3 Documentações**: README.md
+- **1 Diagrama**: diagrama.md (UML em Mermaid)
 
-### Linhas de Código:
-- **Headers**: ~1.200 linhas
-- **Implementações**: ~2.500 linhas
-- **Testes**: ~500 linhas
-- **Total**: ~4.200 linhas de código C++
-
-### Testes:
-- ✅ **44 testes unitários**
-- ✅ **100% de sucesso**
-- ✅ Cobertura de todas as classes
-- ✅ Testes de exceções
-- ✅ Testes de polimorfismo
+### Comentários no Código:
+- ✅ Explicações de conceitos de POO
+- ✅ Documentação de containers STL
+- ✅ Explicação de algoritmos e lambdas
+- ✅ Detalhamento de ponteiros e referências
 
 ---
 
@@ -313,19 +317,6 @@ void Item::setPreco(double preco) {
 
 ---
 
-## 🎓 CONCEITOS DE POO APLICADOS
-
-1. ✅ **Encapsulamento**: Atributos privados, acesso controlado
-2. ✅ **Herança**: 2 hierarquias (Pessoa e ExcecaoBase)
-3. ✅ **Polimorfismo**: Métodos virtuais sobrescritos
-4. ✅ **Abstração**: Classes base abstratas
-5. ✅ **Sobrecarga de Operadores**: `<<` e `==`
-6. ✅ **Tratamento de Exceções**: Sistema robusto
-7. ✅ **Composição**: Uso de structs e maps
-8. ✅ **STL**: vector, map, string, iostream
-
----
-
 ## 📦 COMO USAR
 
 ### Windows:
@@ -333,11 +324,9 @@ void Item::setPreco(double preco) {
 # Compilar e executar
 .\compile.ps1
 
-# Executar testes
-.\test.ps1
 ```
 
-### Linux/Mac:
+### Linux:
 ```bash
 # Compilar
 make
@@ -345,8 +334,6 @@ make
 # Executar
 make run
 
-# Testes
-make run-test
 ```
 
 ---
@@ -354,39 +341,7 @@ make run-test
 ## 📚 DOCUMENTAÇÃO
 
 - **README.md**: Informações gerais e requisitos
-- **DOCUMENTACAO_TECNICA.md**: Documentação completa com exemplos
 - **diagrama.md**: Diagrama UML das classes
-- **Comentários no código**: Doxygen-style em todos os arquivos
-
----
-
-## ✨ DIFERENCIAIS IMPLEMENTADOS
-
-1. ✅ **30+ classes** (requisito: 8)
-2. ✅ **11 exceções personalizadas** (requisito: mínimo)
-3. ✅ **CRUD para 7 entidades** (requisito: 6)
-4. ✅ **44 testes automatizados**
-5. ✅ **Documentação completa**
-6. ✅ **Scripts de compilação multiplataforma**
-7. ✅ **Código limpo e organizado**
-8. ✅ **Validações robustas**
-9. ✅ **Arquitetura em camadas**
-10. ✅ **100% de sucesso nos testes**
-
----
-
-## 🎯 CONCLUSÃO
-
-**TODOS OS REQUISITOS FORAM ATENDIDOS E SUPERADOS!**
-
-O projeto demonstra domínio completo de:
-- Programação Orientada a Objetos
-- C++ moderno (C++17)
-- Estruturas de dados (STL)
-- Tratamento de exceções
-- Testes automatizados
-- Documentação técnica
-- Boas práticas de programação
 
 ---
 
@@ -394,5 +349,3 @@ O projeto demonstra domínio completo de:
 - Fábio Augusto Vieira de Sales Vila
 - Jerônimo Rafael Bezerra Filho
 - Yuri Wendel do Nascimento
-
-**GitHub:** https://github.com/Yuri-Nascimento/ProjetoLP1

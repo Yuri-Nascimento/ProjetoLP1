@@ -1,76 +1,174 @@
-#include <iostream>
-#include <string>
-#include <limits>
-#include <iomanip>
-#include "artista.h"
-#include "item.h"
-#include "estoque.h"
-#include "camarim.h"
-#include "pedido.h"
-#include "listacompras.h"
-#include "excecoes.h"
+/**
+ * @file main.cpp
+ * @brief Programa principal do Sistema de Gestão de Camarim
+ * @authors Fábio Augusto Vieira de Sales Vila
+ *          Jerônimo Rafael Bezerra Filho
+ *          Yuri Wendel do Nascimento
+ * 
+ * Sistema interativo de gestão de camarins para artistas.
+ * Demonstra POO completa: encapsulamento, herança, polimorfismo,
+ * exceções, CRUD, containers STL, e interface de menu.
+ */
 
-using namespace std;
+// ==================== BIBLIOTECAS ====================
+#include <iostream>   // Para cout, cin
+#include <string>     // Para trabalhar com strings
+#include <limits>     // Para numeric_limits (limpar buffer)
+#include <iomanip>    // Para formatação (setw, left, right)
 
-// Gerenciadores globais
-GerenciadorArtistas gerenciadorArtistas;
-GerenciadorItens gerenciadorItens;
-Estoque estoque;
-GerenciadorCamarins gerenciadorCamarins;
-GerenciadorPedidos gerenciadorPedidos;
-GerenciadorListaCompras gerenciadorListaCompras;
+// ==================== HEADERS DO PROJETO ====================
+#include "artista.h"      // Classe Artista e GerenciadorArtistas
+#include "item.h"         // Classe Item e GerenciadorItens (catálogo)
+#include "estoque.h"      // Classe Estoque (controle de estoque)
+#include "camarim.h"      // Classe Camarim e GerenciadorCamarins
+#include "pedido.h"       // Classe Pedido e GerenciadorPedidos
+#include "listacompras.h" // Classe ListaCompras e gerenciador
+#include "excecoes.h"     // Hierarquia de exceções customizadas
 
+using namespace std;  // Namespace padrão da STL
+
+// ==================== GERENCIADORES GLOBAIS ====================
+// Instâncias globais dos gerenciadores (únicas em todo o programa)
+GerenciadorArtistas gerenciadorArtistas;          // Gerencia artistas
+GerenciadorItens gerenciadorItens;                // Gerencia catálogo de itens
+Estoque estoque;                                   // Controla estoque central
+GerenciadorCamarins gerenciadorCamarins;          // Gerencia camarins
+GerenciadorPedidos gerenciadorPedidos;            // Gerencia pedidos de itens
+GerenciadorListaCompras gerenciadorListaCompras;  // Gerencia listas de compras
+
+/**
+ * @brief Limpa buffer de entrada
+ * 
+ * PROBLEMA: Após ler número com cin >>, sobra '\n' no buffer
+ * SOLUÇÃO: Limpa buffer antes de getline()
+ * 
+ * cin.clear() = limpa flags de erro
+ * cin.ignore(max, '\n') = ignora caracteres até encontrar '\n'
+ */
 void limparBuffer() {
-    cin.clear();
+    cin.clear();  // Limpa flags de erro do stream
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // numeric_limits<streamsize>::max() = tamanho máximo do buffer
+    // '\n' = delimitador (para ao encontrar quebra de linha)
+}
+
+/**
+ * @brief Lê valor double aceitando vírgula ou ponto como separador decimal
+ * 
+ * PROBLEMA: cin >> double não aceita vírgula (padrão brasileiro)
+ * SOLUÇÃO: Lê como string, substitui vírgula por ponto, converte para double
+ * 
+ * Exemplos: "4,5" → 4.5 | "10,99" → 10.99 | "3.14" → 3.14
+ * 
+ * @return Valor double lido e convertido
+ */
+double lerDouble() {
+    string entrada;  // Lê entrada como string
+    cin >> entrada;  // Lê string (até espaço/enter)
+    
+    // Substitui vírgula por ponto
+    // Percorre cada caractere da string
+    for (size_t i = 0; i < entrada.length(); i++) {
+        // size_t = tipo para tamanhos/índices (unsigned)
+        
+        if (entrada[i] == ',') {  // Se encontrou vírgula
+            entrada[i] = '.';      // Substitui por ponto
+        }
+    }
+    
+    // Converte string para double
+    try {
+        return stod(entrada);  
+        // stod() = string to double
+        // Lança invalid_argument se string não for número válido
+    } catch (const invalid_argument& e) {
+        // Se conversão falhar, retorna 0.0
+        cout << "\n[AVISO] Valor inválido, usando 0.0" << endl;
+        return 0.0;
+    } catch (const out_of_range& e) {
+        // Se número for muito grande
+        cout << "\n[AVISO] Valor fora do alcance, usando 0.0" << endl;
+        return 0.0;
+    }
 }
 
 // ==================== Funções de Itens (Catálogo) ====================
 
+/**
+ * @brief Exibe todos os itens cadastrados no catálogo
+ * 
+ * Lista itens do CATÁLOGO (não do estoque!)
+ * Catálogo = definição de itens disponíveis no sistema
+ */
 void exibirItens() {
+    // Busca todos os itens do catálogo
     vector<Item> itens = gerenciadorItens.listar();
-    if (itens.empty()) {
+    
+    if (itens.empty()) {  // Se não há itens cadastrados
         cout << "\nNenhum item cadastrado no catálogo.\n" << endl;
-        return;
+        return;  // Retorna cedo (early return)
     }
     
     cout << "\n=== Catálogo de Itens ===" << endl;
+    // Percorre vector de itens
     for (const auto& item : itens) {
-        cout << item.exibir() << endl;
+        // const auto& = referência constante (não copia, não modifica)
+        cout << item.exibir() << endl;  // Chama método exibir() de cada item
     }
 }
 
+/**
+ * @brief Cadastra novo item no catálogo
+ * 
+ * IMPORTANTE: Cadastra no CATÁLOGO, não no estoque!
+ * Estoque é gerenciado separadamente (entrada/saída de quantidades)
+ */
 void cadastrarItem() {
-    string nome;
-    double preco;
+    string nome;   // Nome do item
+    double preco;  // Preço unitário
     
     cout << "\n=== Cadastrar Item no Catálogo ===" << endl;
-    limparBuffer();
+    limparBuffer();  // Limpa buffer antes de getline()
     
     cout << "Nome do Item: ";
-    getline(cin, nome);
+    getline(cin, nome);  // Lê linha completa (permite espaços)
     
     cout << "Preço unitário: R$ ";
-    cin >> preco;
+    preco = lerDouble();  // Lê valor double aceitando vírgula ou ponto
     
+    // TRY-CATCH: Captura exceções lançadas durante cadastro
     try {
         int id = gerenciadorItens.cadastrar(nome, preco);
+        // Cadastra item e recebe ID gerado automaticamente
+        
         cout << "\n[OK] Item cadastrado no catálogo com ID: " << id << endl;
     } catch (const ExcecaoBase& e) {
+        // Captura TODAS as exceções derivadas de ExcecaoBase
+        // Polimorfismo: catch da classe base captura classes derivadas
+        
         cout << "\n[ERRO] " << e.what() << endl;
+        // what() = método virtual que retorna mensagem de erro
     }
 }
 
+/**
+ * @brief Remove item do catálogo
+ * 
+ * ATENÇÃO: Remove do catálogo, não do estoque!
+ */
 void removerItem() {
-    int id;
+    int id;  // ID do item a remover
+    
     cout << "\n=== Remover Item do Catálogo ===" << endl;
     cout << "Digite o ID do item: ";
     cin >> id;
     
     try {
         if (gerenciadorItens.remover(id)) {
+            // remover() retorna true se encontrou e removeu
             cout << "\n[OK] Item removido do catálogo com sucesso!" << endl;
         } else {
+            // remover() retorna false se não encontrou
             cout << "\n[ERRO] Item não encontrado!" << endl;
         }
     } catch (const ExcecaoBase& e) {
@@ -78,21 +176,26 @@ void removerItem() {
     }
 }
 
+/**
+ * @brief Atualiza dados de um item do catálogo
+ * 
+ * Permite alterar nome e preço de item existente
+ */
 void atualizarItem() {
-    int id;
-    string nome;
-    double preco;
+    int id;        // ID do item a atualizar
+    string nome;   // Novo nome
+    double preco;  // Novo preço
     
     cout << "\n=== Atualizar Item do Catálogo ===" << endl;
     cout << "ID do Item: ";
     cin >> id;
-    limparBuffer();
+    limparBuffer();  // Limpa buffer após ler número
     
     cout << "Novo Nome: ";
-    getline(cin, nome);
+    getline(cin, nome);  // Lê linha completa
     
     cout << "Novo Preço: R$ ";
-    cin >> preco;
+    preco = lerDouble();  // Lê valor double aceitando vírgula ou ponto
     
     try {
         if (gerenciadorItens.atualizar(id, nome, preco)) {
@@ -105,6 +208,11 @@ void atualizarItem() {
     }
 }
 
+/**
+ * @brief Busca item no catálogo por nome
+ * 
+ * Busca exata (case-sensitive)
+ */
 void buscarItemPorNome() {
     string nome;
     
@@ -114,10 +222,12 @@ void buscarItemPorNome() {
     cout << "Nome do Item: ";
     getline(cin, nome);
     
+    // Busca retorna PONTEIRO (nullptr se não encontrar)
     Item* item = gerenciadorItens.buscarPorNome(nome);
     
-    if (item) {
+    if (item) {  // Se ponteiro não é nullptr (encontrou)
         cout << "\n" << item->exibir() << endl;
+        // item-> = acesso a método através de ponteiro
     } else {
         cout << "\n[AVISO] Item não encontrado no catálogo!" << endl;
     }
@@ -125,8 +235,14 @@ void buscarItemPorNome() {
 
 // ==================== Funções de Artista ====================
 
+/**
+ * @brief Exibe todos os artistas cadastrados
+ * 
+ * Lista artistas com seus IDs e camarins associados
+ */
 void exibirArtistas() {
     vector<Artista> artistas = gerenciadorArtistas.listar();
+    
     if (artistas.empty()) {
         cout << "\nNenhum artista cadastrado.\n" << endl;
         return;
@@ -134,13 +250,21 @@ void exibirArtistas() {
     
     cout << "\n=== Lista de Artistas ===" << endl;
     for (const auto& artista : artistas) {
+        // Chama método exibir() polimórfico
+        // Artista sobrescreve método de Pessoa
         cout << artista.exibir() << endl;
     }
 }
 
+/**
+ * @brief Cadastra novo artista no sistema
+ * 
+ * Artista HERDA de Pessoa
+ * Adiciona atributo camarimId específico
+ */
 void cadastrarArtista() {
-    string nome;
-    int camarimId;
+    string nome;       // Nome do artista
+    int camarimId;     // ID do camarim (0 = sem camarim)
     
     cout << "\n=== Cadastrar Artista ===" << endl;
     limparBuffer();

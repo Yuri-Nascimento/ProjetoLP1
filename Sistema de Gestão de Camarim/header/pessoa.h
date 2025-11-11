@@ -9,12 +9,16 @@
  * herança e polimorfismo conforme requisitos do projeto.
  */
 
+// Proteção contra inclusão múltipla do header (include guard)
 #ifndef PESSOA_H
 #define PESSOA_H
 
+// Inclusão da biblioteca string para usar a classe string
 #include <string>
+// Inclusão da biblioteca iostream para operações de entrada/saída
 #include <iostream>
 
+// Usando o namespace padrão para evitar std:: antes de cada tipo
 using namespace std;
 
 /**
@@ -27,41 +31,41 @@ using namespace std;
  * - Polimorfismo: método virtual exibir()
  */
 class Pessoa {
-protected:
-    int id;           ///< Identificador único da pessoa
-    string nome;      ///< Nome completo da pessoa
+protected: // Modificador de acesso: acessível pela própria classe e classes derivadas
+    int id;           // Identificador único da pessoa (número inteiro)
+    string nome;      // Nome completo da pessoa (tipo string)
     
-public:
+public: // Modificador de acesso: acessível de qualquer parte do programa
     /**
      * @brief Construtor padrão
      */
-    Pessoa();
+    Pessoa(); // Construtor sem parâmetros, cria pessoa com valores padrão
     
     /**
      * @brief Construtor parametrizado
      * @param id Identificador da pessoa
      * @param nome Nome da pessoa
      */
-    Pessoa(int id, const string& nome);
+    Pessoa(int id, const string& nome); // Construtor com parâmetros para inicializar id e nome
     
     /**
      * @brief Destrutor virtual para suportar polimorfismo
      */
-    virtual ~Pessoa();
+    virtual ~Pessoa(); // Destrutor virtual permite destruição correta de objetos derivados
     
-    // Getters
-    int getId() const;
-    string getNome() const;
+    // Getters - Métodos para ler os valores dos atributos (const = não modificam o objeto)
+    int getId() const; // Retorna o id da pessoa
+    string getNome() const; // Retorna o nome da pessoa
     
-    // Setters
-    void setId(int id);
-    void setNome(const string& nome);
+    // Setters - Métodos para modificar os valores dos atributos
+    void setId(int id); // Define um novo id para a pessoa
+    void setNome(const string& nome); // Define um novo nome para a pessoa
     
     /**
      * @brief Método virtual puro para exibir informações (polimorfismo)
      * @return String formatada com informações da pessoa
      */
-    virtual string exibir() const = 0;
+    virtual string exibir() const = 0; // Método abstrato (=0), deve ser implementado nas classes derivadas
     
     /**
      * @brief Sobrecarga do operador << para exibição
@@ -69,7 +73,7 @@ public:
      * @param pessoa Objeto Pessoa a ser exibido
      * @return Stream de saída
      */
-    friend ostream& operator<<(ostream& os, const Pessoa& pessoa);
-};
+    friend ostream& operator<<(ostream& os, const Pessoa& pessoa); // Permite usar cout << pessoa
+}; // Fim da classe Pessoa
 
-#endif // PESSOA_H
+#endif // PESSOA_H - Fim da proteção contra inclusão múltipla
